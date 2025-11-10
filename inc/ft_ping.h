@@ -1,36 +1,107 @@
 #ifndef FT_PING_H
 #define FT_PING_H
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<ctype.h>
-#include<sys/types.h>
-#include<sys/socket.h>
-#include<netdb.h>
-#include<arpa/inet.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <netinet/ip.h>
+#include <netinet/ip_icmp.h>
+#include <sys/time.h>
+#include <signal.h>
+#include <sys/select.h>
+#include <errno.h>
+#include <float.h>
+#include <math.h>
+#include <stdarg.h>
 
-#define PING "ft_ping"
-#define PARSE_ERROR_MISSING_DEST "usage error: Destination address required"
-#define PARSE_ERROR_UNKNOWN_DEST "Name or service not known"
-#define PARSE_ERROR_INVALID_OPT "invalid option -- "
-#define PARSE_ERROR_ENCODING "Parameter string not correctly encoded"
-#define DNS_ERROR_INVALID_DEST "Temporary failure in name resolution"
-#define ALLOCATION_ERROR "memory allocation failed"
-#define OPT_HELP "-?"
-#define OPT_VERBOSE "-v"
+#define NAME "ping"
+#define EXIT_USAGE 64
+
+#define PACKET_SIZE 64
+#define ICMP_ECHO_REQUEST 8
+#define ICMP_HEADER_SIZE 8
+#define ICMP_ECHO_REPLY 0
+
+#define ICMP_DEST_UNREACH 3
+#define ICMP_TIME_EXCEEDED 11
+#define ICMP_NET_UNREACH 0
+#define ICMP_HOST_UNREACH 1
+#define ICMP_PORT_UNREACH 3
+#define ICMP_EXC_TTL 0
+
+typedef enum {
+    NONE  = 0,
+    ERROR = 1 << 0,
+    HELP  = 1 << 1,
+    HINT  = 1 << 2,
+    STATS = 1 << 3,
+} ExitFlags;
+
+typedef struct s_host {
+    char                *name;
+    struct sockaddr_in  addr;
+    struct s_host       *next;
+} t_host;
 
 typedef struct s_args {
-    int opt_help;       /*-?*/
-    int opt_verbose;    /*-v*/
-    char *dest;         /* final validated destination */
+    int                 opt_verbose;
+    struct s_host       *hosts;
 } t_args;
 
-int parse_args(char **, int, t_args *, char ***, int *);
-int validate_destinations(char **, int, char **);
+typedef struct s_icmp_packet {
+    uint8_t             type;
+    uint8_t             code;
+    uint16_t            checksum;
+    uint16_t            identifier;
+    uint16_t            sequence;
+    char                payload[PACKET_SIZE - ICMP_HEADER_SIZE];
+} t_icmp_packet;
 
-/*Utils*/
-void print_help();
-int has_non_ascii(const char *);
-void *xcalloc(size_t size);
+typedef struct s_ping_stats {
+    char                *hostname;
+    int                 packets_sent;
+    int                 packets_recv;
+    double              min_time;
+    double              max_time;
+    double              sum_squares;
+    double              total_time;
+} t_ping_stats;
+
+/* Global Variables */
+extern t_args       *g_args;
+extern volatile int keep_running;
+extern t_ping_stats g_stats;
+
+/*parser*/
+void        parse_args(char **, int);
+
+/*DNS*/
+void        validate_host_dns(t_host *);
+
+/*ping*/
+void        ping(t_host *);
+
+/*utils*/
+void        *xcalloc(size_t);
+void        free_hosts(void);
+int         has_non_ascii(const char *);
+void        cleanup_and_exit(ExitFlags, int);
+void        signal_handler(int);
+uint16_t    calculate_checksum(void *, int);
+t_ping_stats initialize_stats(char *);
+
+/*print*/
+void        print_error(const char *, ...);
+void        print_hint(void);
+void        print_help(void);
+void        print_header(t_host *, pid_t);
+void        print_ping(t_icmp_packet *, char *, ssize_t, struct sockaddr_in, double);
+void        print_icmp_error(t_icmp_packet *, struct sockaddr_in *);
+void        print_stats(void);
+
 #endif
-
