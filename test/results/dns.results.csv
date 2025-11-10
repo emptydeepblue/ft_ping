@@ -1,0 +1,37 @@
+Test_Suite,Command,Exit_Code,Output,Execution_Time_ms
+❌ INVALID IP ADDRESS,ping 999.999.999.999,1,ping: unknown host,8935
+❌ INVALID IP ADDRESS,ping 256.256.256.256,1,ping: unknown host,10055
+❌ INVALID IP ADDRESS,ping 300.300.300.300,1,ping: unknown host,10059
+⚠️ INVALID HOSTNAMES,ping abc..def,1,ping: unknown host,6
+⚠️ INVALID HOSTNAMES,ping google..com,1,ping: unknown host,5
+⚠️ INVALID HOSTNAMES,ping host@name,1,ping: unknown host,18880
+⚠️ INVALID HOSTNAMES,"ping google,com",1,ping: unknown host,18872
+⚠️ INVALID HOSTNAMES,ping google:com,1,ping: unknown host,20058
+⚠️ INVALID HOSTNAMES,ping example..com,1,ping: unknown host,3
+🌀 WHITESPACES,ping \n\t,1,ping: unknown host,30
+🌀 WHITESPACES,"ping "" """,1,ping: unknown host,18912
+🌀 WHITESPACES,"ping ""    """,1,ping: unknown host,20083
+🌀 WHITESPACES,"ping ""%20%20%20""",1,ping: unknown host,18843
+🌀 WHITESPACES,"ping -v ""127.0.0.1   """,1,ping: unknown host,18887
+🌀 WHITESPACES,"ping -v ""    127.0.0.1""",1,ping: unknown host,20030
+🌀 WHITESPACES,"ping ""GOOGLE.COM     """,1,ping: unknown host,19190
+🌀 WHITESPACES,"ping ""google.com """,1,ping: unknown host,19174
+🌀 WHITESPACES,"ping "" google.com""",1,ping: unknown host,20140
+🌀 WHITESPACES,"ping "" google.com   """,1,ping: unknown host,18870
+🌐 FQDN CASES,ping sub.domain.google.com,1,ping: unknown host,87
+🌐 FQDN CASES,"ping ""google.com    extra""",1,ping: unknown host,20061
+🛡️ COMMAND INJECTION,"ping ""$(ls)""",1,ping: unknown host,18972
+🛡️ COMMAND INJECTION,"ping ""$(ls -la)""",1,ping: unknown host,14
+🛡️ COMMAND INJECTION,"ping ""; rm -rf /""",1,ping: unknown host,18808
+🛡️ COMMAND INJECTION,"ping ""127.0.0.1; echo hello""",1,ping: unknown host,20058
+🛡️ COMMAND INJECTION,"ping ""`shutdown now`""",1,"Failed to set wall message, ignoring: Interactive authentication required. | Failed to power off system via logind: Interactive authentication required.",99
+🛡️ COMMAND INJECTION,"ping ""$(reboot)""",1,"Failed to set wall message, ignoring: Interactive authentication required. | Failed to reboot system via logind: Interactive authentication required.",75
+🧬 BINARY,"ping ""$(printf '\x00')""",1,bash: line 1: warning: command substitution: ignored null byte in input | ping: unknown host,6
+🧬 BINARY,"ping ""$(printf '\xff\xff')""",1,ping: unknown host,4
+🧬 BINARY,"ping ""%00%01%02""",1,ping: unknown host,18858
+🎯 EDGE CASES,"ping ""$(printf '\x00')""",1,bash: line 1: warning: command substitution: ignored null byte in input | ping: unknown host,8
+🎯 EDGE CASES,"ping ""$(printf '\xff\xff')""",1,ping: unknown host,6
+🔀 DIFFERENT BEHAVIOUR,ping -- -v,1,ping: unknown host,27
+🔀 DIFFERENT BEHAVIOUR,ping -- -v 127.0.0.1,1,ping: unknown host,27
+🔀 DIFFERENT BEHAVIOUR,ping -- -- -? 127.0.0.1,1,ping: unknown host,27
+🔀 DIFFERENT BEHAVIOUR,ping -- -4./ft_pong -- -v,1,ping: unknown host,18850

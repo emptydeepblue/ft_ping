@@ -1,0 +1,44 @@
+# ❌ INVALID IP ADDRESS
+ping 999.999.999.999
+ping 256.256.256.256
+ping 300.300.300.300
+# ⚠️ INVALID HOSTNAMES
+ping abc..def
+ping google..com
+ping host@name
+ping google,com
+ping google:com
+ping example..com
+# 🌀 WHITESPACES
+ping \n\t
+ping " "
+ping "    "
+ping "%20%20%20"
+ping -v "127.0.0.1   "
+ping -v "    127.0.0.1"
+ping "GOOGLE.COM     "
+ping "google.com "
+ping " google.com"
+ping " google.com   "
+# 🌐 FQDN CASES
+ping sub.domain.google.com
+ping "google.com    extra"
+# 🛡️ COMMAND INJECTION
+ping "$(ls)"
+ping "$(ls -la)"
+ping "; rm -rf /"
+ping "127.0.0.1; echo hello"
+ping "`shutdown now`"
+ping "$(reboot)"
+# 🧬 BINARY
+ping "$(printf '\x00')"
+ping "$(printf '\xff\xff')"
+ping "%00%01%02"
+# 🎯 EDGE CASES
+ping "$(printf '\x00')"
+ping "$(printf '\xff\xff')"
+# 🔀 DIFFERENT BEHAVIOUR
+ping -- -v
+ping -- -v 127.0.0.1
+ping -- -- -? 127.0.0.1
+ping -- -4./ft_pong -- -v
