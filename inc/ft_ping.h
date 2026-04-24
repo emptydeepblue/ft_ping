@@ -105,3 +105,16 @@ void        print_icmp_error(t_args *, t_icmp_packet *, struct sockaddr_in *, in
 void        print_stats(t_ping_stats *);
 
 #endif
+
+
+/*
+  ./configure --prefix=/usr/local --disable-ifconfig --disable-logger \                   
+              --disable-whois --disable-rcp --disable-rexec --disable-rlogin \            
+              --disable-rsh --disable-talk --disable-telnet --disable-tftp \              
+              --disable-ftp --disable-ftpd --disable-inetd --disable-rexecd \             
+              --disable-rlogind --disable-rshd --disable-syslogd --disable-talkd \        
+              --disable-telnetd --disable-tftpd --disable-uucpd --disable-hostname \      
+              --disable-traceroute --disable-dnsdomainname --disable-ping6                
+  make                                                                                    
+  sudo make install       
+*/
