@@ -285,6 +285,6 @@
     "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
     "command": "ping -V localhost",
     "exit_code": 0,
-    "output": "ping (GNU inetutils) 2.2\nCopyright (C) 2021 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\nWritten by Sergey Poznyakoff."
+    "output": "ping (GNU inetutils) 2.0\nCopyright (C) 2021 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\nWritten by Sergey Poznyakoff."
   }
 ]
