@@ -1,0 +1,57 @@
+# ✅ VALID WITH FLAGS AND HOST
+ping 127.0.0.1 -?
+ping google.com -v -?
+ping -v -? localhost
+ping -v ftp.debian.org -?
+ping -? example.com
+ping -v -? google.com
+ping -? -v google.com
+#❓ FLAGS ONLY (NO TARGET)
+ping -?
+ping -v
+ping -? extra_argument
+ping -?????
+ping -v -v -? -v
+ping -? -v
+ping -v-?
+ping -?v
+ping -v -?
+ping -help
+# 🧪 MIXED FLAG AND TARGET COMBINATIONS
+ping -vv? 127.0.0.1
+ping -?v? 127.0.0.1
+ping -v-? 127.0.0.1
+ping -?v -? -v
+ping -?v -- google.com
+# 🧱 QUOTED ARGUMENTS
+ping "-v"
+ping "-?"
+ping "-vgoogle.com"
+# ❌ INVALID FLAGS
+ping -x 127.0.0.1
+ping -z localhost
+ping -? -z
+ping --invalid
+# ⚠️ FLAG BUNDLING / INVALID SHORT OPTIONS
+ping -abc
+ping -xyz
+ping -vabc
+ping -v -xyz
+# 🧨 MALFORMED OR INVALID HOSTNAMES
+ping ..example.com
+ping "💣"
+ping "😊"
+ping "😀.com"
+ping "☠️.com"
+ping "127.0.0.1😀"
+ping "localhost😀"
+ping .....
+# 🚫 MISSING TARGET OR EMPTY STRINGS
+ping
+ping ""
+ping "" ""
+# 🔀 DIFFERENT BEHAVIOUR
+ping -vlocalhost
+ping --help
+ping -foo 127.0.0.1
+ping -V localhost
