@@ -72,25 +72,25 @@ typedef struct s_ping_stats {
     double              total_time;
 } t_ping_stats;
 
-/* Global Variables */
-extern t_args       *g_args;
-extern volatile int keep_running;
-extern t_ping_stats g_stats;
+/* Only global — signal handlers may only touch volatile sig_atomic_t
+   objects. Everything else is stack-allocated in main() and threaded
+   through the call graph. */
+extern volatile sig_atomic_t g_keep_running;
 
 /*parser*/
-void        parse_args(char **, int);
+void        parse_args(t_args *, char **, int);
 
 /*DNS*/
-void        validate_host_dns(t_host *);
+void        validate_host_dns(t_args *, t_host *);
 
 /*ping*/
-void        ping(t_host *);
+void        ping(t_args *, t_host *);
 
 /*utils*/
-void        *xcalloc(size_t);
-void        free_hosts(void);
+void        *xcalloc(t_args *, size_t);
+void        free_hosts(t_args *);
 int         has_non_ascii(const char *);
-void        cleanup_and_exit(ExitFlags, int);
+void        cleanup_and_exit(t_args *, ExitFlags, int);
 void        signal_handler(int);
 uint16_t    calculate_checksum(void *, int);
 t_ping_stats initialize_stats(char *);
@@ -99,9 +99,9 @@ t_ping_stats initialize_stats(char *);
 void        print_error(const char *, ...);
 void        print_hint(void);
 void        print_help(void);
-void        print_header(t_host *, pid_t);
+void        print_header(t_args *, t_host *, pid_t);
 void        print_ping(t_icmp_packet *, char *, ssize_t, struct sockaddr_in, double);
-void        print_icmp_error(t_icmp_packet *, struct sockaddr_in *);
-void        print_stats(void);
+void        print_icmp_error(t_args *, t_icmp_packet *, struct sockaddr_in *, int, pid_t);
+void        print_stats(t_ping_stats *);
 
 #endif

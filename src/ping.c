@@ -12,86 +12,89 @@
 
 #include "../inc/ft_ping.h"
 
-static int initialize_socket();
-// static t_ping_stats initialize_stats();
+static int initialize_socket(t_args *args);
 static t_icmp_packet initialize_packet(pid_t, int);
-static t_icmp_packet *parse_icmp_reply(char *recv, ssize_t recv_bytes) ;
+static t_icmp_packet *parse_icmp_reply(char *recv, ssize_t recv_bytes);
 static int check_packet_ownership(t_icmp_packet *reply, pid_t pid, int exp_seq);
 
-void ping(t_host *host) {
-    pid_t   pid = getpid(), sequence = 0;
-    int     sockfd = initialize_socket();
-    
+void ping(t_args *args, t_host *host) {
+    pid_t        pid = getpid(), sequence = 0;
+    int          sockfd = initialize_socket(args);
+    t_ping_stats stats;
+
     signal(SIGINT, signal_handler);
-    print_header(host, pid);
-    g_stats = initialize_stats(host->name); 
-    
-    while (keep_running) {
+    print_header(args, host, pid);
+    stats = initialize_stats(host->name);
+
+    while (g_keep_running) {
         struct timeval  send_time, recv_time;
         int             attempts = 0, found_our_reply = 0;
         t_icmp_packet   packet;
-        
+
         packet = initialize_packet(pid, sequence);
         gettimeofday(&send_time, NULL);
 
-        ssize_t sent = sendto(sockfd, &packet, sizeof(packet), 0, (struct sockaddr *)&host->addr, sizeof(host->addr));    
-        if (sent < 0) 
+        ssize_t sent = sendto(sockfd, &packet, sizeof(packet), 0, (struct sockaddr *)&host->addr, sizeof(host->addr));
+        if (sent < 0)
             continue;
-        g_stats.packets_sent++;
+        stats.packets_sent++;
 
         while (attempts < 50 && !found_our_reply) {
             char                recv_buffer[1024];
             struct sockaddr_in  recv_addr;
             socklen_t           addr_len = sizeof(recv_addr);
-            
+
             ssize_t received = recvfrom(sockfd, recv_buffer, sizeof(recv_buffer), 0, (struct sockaddr *)&recv_addr, &addr_len);
             if (received < 0)
                 break;
             t_icmp_packet *reply = parse_icmp_reply(recv_buffer, received);
 
             if (reply != NULL) {
-                if (check_packet_ownership(reply, pid, sequence)) { 
+                if (check_packet_ownership(reply, pid, sequence)) {
                     gettimeofday(&recv_time, NULL);
-                    double rtt = (recv_time.tv_sec - send_time.tv_sec) * 1000.0 + 
+                    double rtt = (recv_time.tv_sec - send_time.tv_sec) * 1000.0 +
                                 (recv_time.tv_usec - send_time.tv_usec) / 1000.0;
 
                     print_ping(reply, recv_buffer, received, recv_addr, rtt);
 
-                    g_stats.sum_squares += rtt * rtt;
-                    if (rtt < g_stats.min_time) g_stats.min_time = rtt;
-                    if (rtt > g_stats.max_time) g_stats.max_time = rtt;
-                    g_stats.total_time += rtt;
-                    g_stats.packets_recv++;
+                    stats.sum_squares += rtt * rtt;
+                    if (rtt < stats.min_time) stats.min_time = rtt;
+                    if (rtt > stats.max_time) stats.max_time = rtt;
+                    stats.total_time += rtt;
+                    stats.packets_recv++;
                     found_our_reply = 1;
                 }
-                // Check if this is an ICMP error message (in verbose mode)
                 else if (reply->type == ICMP_DEST_UNREACH || reply->type == ICMP_TIME_EXCEEDED) {
-                    print_icmp_error(reply, &recv_addr);
+                    struct iphdr *outer_ip = (struct iphdr *)recv_buffer;
+                    int icmp_size = received - outer_ip->ihl * 4;
+                    print_icmp_error(args, reply, &recv_addr, icmp_size, pid);
                 }
             }
             attempts ++;
         }
         sequence++;
-        if (!keep_running) {
-            cleanup_and_exit(STATS, EXIT_SUCCESS);
-        }
+        if (!g_keep_running)
+            break;
         sleep(1);
     }
 
+    print_stats(&stats);
     close(sockfd);
 }
 
-static int initialize_socket() {
+static int initialize_socket(t_args *args) {
     int sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
     if (sockfd < 0) {
         if (errno == EPERM) {
             print_error("socket: Operation not permitted (need root)\n");
-            cleanup_and_exit(ERROR, EXIT_FAILURE);
+            cleanup_and_exit(args, ERROR, EXIT_FAILURE);
         } else {
             print_error("socket");
-            cleanup_and_exit(ERROR, EXIT_FAILURE);
+            cleanup_and_exit(args, ERROR, EXIT_FAILURE);
         }
     }
+    struct timeval timeout = {1, 0};
+    setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
     return sockfd;
 }
 
@@ -110,14 +113,14 @@ static t_icmp_packet initialize_packet(pid_t pid, int sequence) {
 }
 
 static t_icmp_packet *parse_icmp_reply(char *recv, ssize_t recv_bytes) {
-    if (recv_bytes < ICMP_HEADER_SIZE) 
+    if (recv_bytes < ICMP_HEADER_SIZE)
         return NULL;
-    
+
     struct iphdr    *ip_header = (struct iphdr *)recv;
     int             header_bytes = ip_header->ihl * 4;
     t_icmp_packet   *icmp_packet = NULL;
 
-    if (recv_bytes < header_bytes + ICMP_HEADER_SIZE) 
+    if (recv_bytes < header_bytes + ICMP_HEADER_SIZE)
         return NULL;
 
     icmp_packet = (t_icmp_packet *)(recv + header_bytes);
@@ -125,7 +128,7 @@ static t_icmp_packet *parse_icmp_reply(char *recv, ssize_t recv_bytes) {
 }
 
 static int check_packet_ownership(t_icmp_packet *reply, pid_t pid, int exp_seq) {
-    if (reply->type != ICMP_ECHO_REPLY) 
+    if (reply->type != ICMP_ECHO_REPLY)
         return 0;
 
     uint16_t reply_id = ntohs(reply->identifier);
@@ -138,16 +141,3 @@ static int check_packet_ownership(t_icmp_packet *reply, pid_t pid, int exp_seq) 
 
     return 1;
 }
-    
-// static t_ping_stats initialize_stats(char *hostname) {
-//     t_ping_stats stats;
-    
-//     stats.hostname = hostname;
-//     stats.packets_sent = 0;
-//     stats.packets_recv = 0;
-//     stats.min_time = DBL_MAX;
-//     stats.max_time = 0.0;
-//     stats.total_time = 0.0;
-//     stats.sum_squares = 0.0;
-//     return stats;
-// }
