@@ -12,19 +12,19 @@
 
 #include "../inc/ft_ping.h"
 
-void validate_host_dns(t_host *host) {
+void validate_host_dns(t_args *args, t_host *host) {
     struct addrinfo hints, *result;
-    
+
     memset(&hints, 0, sizeof(hints));
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_RAW;
     hints.ai_flags = AI_CANONNAME;
 
     int status = getaddrinfo(host->name, NULL, &hints, &result);
-    
+
     if (status != 0){
         print_error("unknown host\n");
-        cleanup_and_exit(ERROR, EXIT_FAILURE);
+        cleanup_and_exit(args, ERROR, EXIT_FAILURE);
     }
 
     memcpy(&host->addr, result->ai_addr, sizeof(host->addr));

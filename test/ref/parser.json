@@ -1,0 +1,290 @@
+[
+  {
+    "section": "\u2705 VALID WITH FLAGS AND HOST",
+    "command": "ping 127.0.0.1 -?",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u2705 VALID WITH FLAGS AND HOST",
+    "command": "ping google.com -v -?",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u2705 VALID WITH FLAGS AND HOST",
+    "command": "ping -v -? localhost",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u2705 VALID WITH FLAGS AND HOST",
+    "command": "ping -v ftp.debian.org -?",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u2705 VALID WITH FLAGS AND HOST",
+    "command": "ping -? example.com",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u2705 VALID WITH FLAGS AND HOST",
+    "command": "ping -v -? google.com",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u2705 VALID WITH FLAGS AND HOST",
+    "command": "ping -? -v google.com",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u2753 FLAGS ONLY (NO TARGET)",
+    "command": "ping -?",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u2753 FLAGS ONLY (NO TARGET)",
+    "command": "ping -v",
+    "exit_code": 64,
+    "output": "ping: missing host operand\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\u2753 FLAGS ONLY (NO TARGET)",
+    "command": "ping -? extra_argument",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u2753 FLAGS ONLY (NO TARGET)",
+    "command": "ping -?????",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u2753 FLAGS ONLY (NO TARGET)",
+    "command": "ping -v -v -? -v",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u2753 FLAGS ONLY (NO TARGET)",
+    "command": "ping -? -v",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u2753 FLAGS ONLY (NO TARGET)",
+    "command": "ping -v-?",
+    "exit_code": 64,
+    "output": "ping: invalid option -- '-'\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\u2753 FLAGS ONLY (NO TARGET)",
+    "command": "ping -?v",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u2753 FLAGS ONLY (NO TARGET)",
+    "command": "ping -v -?",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u2753 FLAGS ONLY (NO TARGET)",
+    "command": "ping -help",
+    "exit_code": 64,
+    "output": "ping: invalid option -- 'h'\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\ud83e\uddea MIXED FLAG AND TARGET COMBINATIONS",
+    "command": "ping -vv? 127.0.0.1",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\ud83e\uddea MIXED FLAG AND TARGET COMBINATIONS",
+    "command": "ping -?v? 127.0.0.1",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\ud83e\uddea MIXED FLAG AND TARGET COMBINATIONS",
+    "command": "ping -v-? 127.0.0.1",
+    "exit_code": 64,
+    "output": "ping: invalid option -- '-'\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\ud83e\uddea MIXED FLAG AND TARGET COMBINATIONS",
+    "command": "ping -?v -? -v",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\ud83e\uddea MIXED FLAG AND TARGET COMBINATIONS",
+    "command": "ping -?v -- google.com",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\ud83e\uddf1 QUOTED ARGUMENTS",
+    "command": "ping \"-v\"",
+    "exit_code": 64,
+    "output": "ping: missing host operand\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\ud83e\uddf1 QUOTED ARGUMENTS",
+    "command": "ping \"-?\"",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\ud83e\uddf1 QUOTED ARGUMENTS",
+    "command": "ping \"-vgoogle.com\"",
+    "exit_code": 64,
+    "output": "ping: invalid option -- 'g'\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\u274c INVALID FLAGS",
+    "command": "ping -x 127.0.0.1",
+    "exit_code": 64,
+    "output": "ping: invalid option -- 'x'\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\u274c INVALID FLAGS",
+    "command": "ping -z localhost",
+    "exit_code": 64,
+    "output": "ping: invalid option -- 'z'\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\u274c INVALID FLAGS",
+    "command": "ping -? -z",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\u274c INVALID FLAGS",
+    "command": "ping --invalid",
+    "exit_code": 64,
+    "output": "ping: unrecognized option '--invalid'\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\u26a0\ufe0f FLAG BUNDLING / INVALID SHORT OPTIONS",
+    "command": "ping -abc",
+    "exit_code": 64,
+    "output": "ping: invalid option -- 'a'\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\u26a0\ufe0f FLAG BUNDLING / INVALID SHORT OPTIONS",
+    "command": "ping -xyz",
+    "exit_code": 64,
+    "output": "ping: invalid option -- 'x'\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\u26a0\ufe0f FLAG BUNDLING / INVALID SHORT OPTIONS",
+    "command": "ping -vabc",
+    "exit_code": 64,
+    "output": "ping: invalid option -- 'a'\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\u26a0\ufe0f FLAG BUNDLING / INVALID SHORT OPTIONS",
+    "command": "ping -v -xyz",
+    "exit_code": 64,
+    "output": "ping: invalid option -- 'x'\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\ud83e\udde8 MALFORMED OR INVALID HOSTNAMES",
+    "command": "ping ..example.com",
+    "exit_code": 1,
+    "output": "ping: unknown host"
+  },
+  {
+    "section": "\ud83e\udde8 MALFORMED OR INVALID HOSTNAMES",
+    "command": "ping \"\ud83d\udca3\"",
+    "exit_code": 1,
+    "output": "ping: unknown host"
+  },
+  {
+    "section": "\ud83e\udde8 MALFORMED OR INVALID HOSTNAMES",
+    "command": "ping \"\ud83d\ude0a\"",
+    "exit_code": 1,
+    "output": "ping: unknown host"
+  },
+  {
+    "section": "\ud83e\udde8 MALFORMED OR INVALID HOSTNAMES",
+    "command": "ping \"\ud83d\ude00.com\"",
+    "exit_code": 1,
+    "output": "ping: unknown host"
+  },
+  {
+    "section": "\ud83e\udde8 MALFORMED OR INVALID HOSTNAMES",
+    "command": "ping \"\u2620\ufe0f.com\"",
+    "exit_code": 1,
+    "output": "ping: unknown host"
+  },
+  {
+    "section": "\ud83e\udde8 MALFORMED OR INVALID HOSTNAMES",
+    "command": "ping \"127.0.0.1\ud83d\ude00\"",
+    "exit_code": 1,
+    "output": "ping: unknown host"
+  },
+  {
+    "section": "\ud83e\udde8 MALFORMED OR INVALID HOSTNAMES",
+    "command": "ping \"localhost\ud83d\ude00\"",
+    "exit_code": 1,
+    "output": "ping: unknown host"
+  },
+  {
+    "section": "\ud83e\udde8 MALFORMED OR INVALID HOSTNAMES",
+    "command": "ping .....",
+    "exit_code": 1,
+    "output": "ping: unknown host"
+  },
+  {
+    "section": "\ud83d\udeab MISSING TARGET OR EMPTY STRINGS",
+    "command": "ping",
+    "exit_code": 64,
+    "output": "ping: missing host operand\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\ud83d\udeab MISSING TARGET OR EMPTY STRINGS",
+    "command": "ping \"\"",
+    "exit_code": 1,
+    "output": "ping: unknown host"
+  },
+  {
+    "section": "\ud83d\udeab MISSING TARGET OR EMPTY STRINGS",
+    "command": "ping \"\" \"\"",
+    "exit_code": 1,
+    "output": "ping: unknown host"
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping -vlocalhost",
+    "exit_code": 1,
+    "output": "ping: invalid preload value (ocalhost)"
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping --help",
+    "exit_code": 0,
+    "output": "Usage: ping [OPTION...] HOST ..."
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping -foo 127.0.0.1",
+    "exit_code": 64,
+    "output": "ping: invalid option -- 'o'\nTry 'ping --help' or 'ping --usage' for more information."
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping -V localhost",
+    "exit_code": 0,
+    "output": "ping (GNU inetutils) 2.2\nCopyright (C) 2021 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\nWritten by Sergey Poznyakoff."
+  }
+]

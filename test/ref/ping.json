@@ -1,0 +1,284 @@
+[
+  {
+    "section": "\u2705 Basic IPv4",
+    "command": "ping 127.0.0.1",
+    "exit_code": 0,
+    "output": "PING 127.0.0.1 (X.X.X.X): 56 data bytes\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- 127.0.0.1 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\u2705 Basic IPv4",
+    "command": "ping localhost",
+    "exit_code": 0,
+    "output": "PING localhost (X.X.X.X): 56 data bytes\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- localhost ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\u2705 Basic IPv4",
+    "command": "ping '127.0.0.1'",
+    "exit_code": 0,
+    "output": "PING 127.0.0.1 (X.X.X.X): 56 data bytes\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- 127.0.0.1 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\u2705 Basic IPv4",
+    "command": "ping \"localhost\"",
+    "exit_code": 0,
+    "output": "PING localhost (X.X.X.X): 56 data bytes\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- localhost ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\u2705 Basic IPv4",
+    "command": "ping \"loCALHOST\"",
+    "exit_code": 0,
+    "output": "PING localhost (X.X.X.X): 56 data bytes\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- localhost ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\u2705 Basic IPv4",
+    "command": "ping LoCaLhOsT",
+    "exit_code": 0,
+    "output": "PING localhost (X.X.X.X): 56 data bytes\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- localhost ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\u2705 Basic IPv4",
+    "command": "ping LoCALhoST",
+    "exit_code": 0,
+    "output": "PING localhost (X.X.X.X): 56 data bytes\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- localhost ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\u2705 Basic IPv4",
+    "command": "ping 8.8.8.8",
+    "exit_code": 0,
+    "output": "PING 8.8.8.8 (X.X.X.X): 56 data bytes\nN bytes from 8.8.8.8: icmp_seq=N ttl=X time=X ms\n--- 8.8.8.8 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\u2705 Basic IPv4",
+    "command": "ping 1.1.1.1",
+    "exit_code": 0,
+    "output": "PING 1.1.1.1 (X.X.X.X): 56 data bytes\nN bytes from 1.1.1.1: icmp_seq=N ttl=X time=X ms\n--- 1.1.1.1 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf10 Domain Names / FQDN",
+    "command": "ping google.com",
+    "exit_code": 0,
+    "output": "PING google.com (X.X.X.X): 56 data bytes\nN bytes from 172.217.168.142: icmp_seq=N ttl=X time=X ms\n--- google.com ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf10 Domain Names / FQDN",
+    "command": "ping \"GoOgLe.CoM\"",
+    "exit_code": 0,
+    "output": "PING GoOgLe.CoM (X.X.X.X): 56 data bytes\nN bytes from 172.217.168.142: icmp_seq=N ttl=X time=X ms\n--- GoOgLe.CoM ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf10 Domain Names / FQDN",
+    "command": "ping www.google.com",
+    "exit_code": 0,
+    "output": "PING www.google.com (X.X.X.X): 56 data bytes\nN bytes from 142.251.157.119: icmp_seq=N ttl=X time=X ms\n--- www.google.com ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf10 Domain Names / FQDN",
+    "command": "ping example.com",
+    "exit_code": 0,
+    "output": "PING example.com (X.X.X.X): 56 data bytes\nN bytes from 104.20.23.154: icmp_seq=N ttl=X time=X ms\n--- example.com ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf10 Domain Names / FQDN",
+    "command": "ping GOOGLE.com",
+    "exit_code": 0,
+    "output": "PING GOOGLE.com (X.X.X.X): 56 data bytes\nN bytes from 172.217.168.142: icmp_seq=N ttl=X time=X ms\n--- GOOGLE.com ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf10 Domain Names / FQDN",
+    "command": "ping gOoGlE.CoM",
+    "exit_code": 0,
+    "output": "PING gOoGlE.CoM (X.X.X.X): 56 data bytes\nN bytes from 172.217.168.142: icmp_seq=N ttl=X time=X ms\n--- gOoGlE.CoM ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping -v 127.0.0.1",
+    "exit_code": 0,
+    "output": "PING 127.0.0.1 (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- 127.0.0.1 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping -v localhost",
+    "exit_code": 0,
+    "output": "PING localhost (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- localhost ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping 127.0.0.1 -v",
+    "exit_code": 0,
+    "output": "PING 127.0.0.1 (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- 127.0.0.1 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping -v -- localhost",
+    "exit_code": 0,
+    "output": "PING localhost (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- localhost ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping -- 127.0.0.1",
+    "exit_code": 0,
+    "output": "PING 127.0.0.1 (X.X.X.X): 56 data bytes\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- 127.0.0.1 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping -- google.com",
+    "exit_code": 0,
+    "output": "PING google.com (X.X.X.X): 56 data bytes\nN bytes from 172.217.168.142: icmp_seq=N ttl=X time=X ms\n--- google.com ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping -v -- 127.0.0.1",
+    "exit_code": 0,
+    "output": "PING 127.0.0.1 (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- 127.0.0.1 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping localhost -v",
+    "exit_code": 0,
+    "output": "PING localhost (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- localhost ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping -vvvv google.com",
+    "exit_code": 0,
+    "output": "PING google.com (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 172.217.168.142: icmp_seq=N ttl=X time=X ms\n--- google.com ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping -v -v -v 127.0.0.1",
+    "exit_code": 0,
+    "output": "PING 127.0.0.1 (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- 127.0.0.1 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping -vvv -- 127.0.0.1",
+    "exit_code": 0,
+    "output": "PING 127.0.0.1 (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- 127.0.0.1 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping -v ftp.debian.org",
+    "exit_code": 0,
+    "output": "PING debian.map.fastlydns.net (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 146.75.54.132: icmp_seq=N ttl=X time=X ms\n--- debian.map.fastlydns.net ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping -v google.com -v",
+    "exit_code": 0,
+    "output": "PING google.com (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 172.217.168.142: icmp_seq=N ttl=X time=X ms\n--- google.com ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping      -v       google.com",
+    "exit_code": 0,
+    "output": "PING google.com (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 172.217.168.142: icmp_seq=N ttl=X time=X ms\n--- google.com ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83c\udf9b\ufe0f Verbose Mode (-v)",
+    "command": "ping\t-v\tgoogle.com",
+    "exit_code": 0,
+    "output": "PING google.com (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 172.217.168.142: icmp_seq=N ttl=X time=X ms\n--- google.com ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83d\udda5\ufe0f Command Substitution / Shell Expansion",
+    "command": "ping \"$(echo 127.0.0.1)\"",
+    "exit_code": 0,
+    "output": "PING 127.0.0.1 (X.X.X.X): 56 data bytes\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- 127.0.0.1 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83d\udda5\ufe0f Command Substitution / Shell Expansion",
+    "command": "ping \"`echo 127.0.0.1`\"",
+    "exit_code": 0,
+    "output": "PING 127.0.0.1 (X.X.X.X): 56 data bytes\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- 127.0.0.1 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83d\udda5\ufe0f Command Substitution / Shell Expansion",
+    "command": "ping $(echo 127.0.0.1)",
+    "exit_code": 0,
+    "output": "PING 127.0.0.1 (X.X.X.X): 56 data bytes\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- 127.0.0.1 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83d\udda5\ufe0f Command Substitution / Shell Expansion",
+    "command": "ping \"`echo google.com`\"",
+    "exit_code": 0,
+    "output": "PING google.com (X.X.X.X): 56 data bytes\nN bytes from 172.217.168.142: icmp_seq=N ttl=X time=X ms\n--- google.com ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83d\udda5\ufe0f Command Substitution / Shell Expansion",
+    "command": "ping 'google.com'",
+    "exit_code": 0,
+    "output": "PING google.com (X.X.X.X): 56 data bytes\nN bytes from 172.217.168.142: icmp_seq=N ttl=X time=X ms\n--- google.com ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83d\udda5\ufe0f Command Substitution / Shell Expansion",
+    "command": "ping '127.0.0.1'",
+    "exit_code": 0,
+    "output": "PING 127.0.0.1 (X.X.X.X): 56 data bytes\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- 127.0.0.1 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms"
+  },
+  {
+    "section": "\ud83e\uddea Combined / Piped Commands",
+    "command": "ping localhost && echo \"Success\"",
+    "exit_code": 0,
+    "output": "PING localhost (X.X.X.X): 56 data bytes\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- localhost ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms\nSuccess"
+  },
+  {
+    "section": "\ud83e\uddea Combined / Piped Commands",
+    "command": "ping -v 127.0.0.1 | grep ttl",
+    "exit_code": 130,
+    "output": ""
+  },
+  {
+    "section": "\ud83e\uddea Combined / Piped Commands",
+    "command": "ping -v 127.0.0.1 | grep time=",
+    "exit_code": 130,
+    "output": ""
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping 1.1.1",
+    "exit_code": 1,
+    "output": "PING 1.1.1 (X.X.X.X): 56 data bytes\n--- 1.1.1 ping statistics ---\nN transmitted, N received, X% loss"
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping 192.168.1",
+    "exit_code": 1,
+    "output": "PING 192.168.1 (X.X.X.X): 56 data bytes\n--- 192.168.1 ping statistics ---\nN transmitted, N received, X% loss"
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping 10.255.255.1",
+    "exit_code": 1,
+    "output": "PING 10.255.255.1 (X.X.X.X): 56 data bytes\n--- 10.255.255.1 ping statistics ---\nN transmitted, N received, X% loss"
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping 192.0.2.0",
+    "exit_code": 1,
+    "output": "PING 192.0.2.0 (X.X.X.X): 56 data bytes\n--- 192.0.2.0 ping statistics ---\nN transmitted, N received, X% loss"
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping 127.0.0.1 8.8.8.8",
+    "exit_code": 1,
+    "output": "PING 127.0.0.1 (X.X.X.X): 56 data bytes\nN bytes from 127.0.0.1: icmp_seq=N ttl=X time=X ms\n--- 127.0.0.1 ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms\nPING 8.8.8.8 (X.X.X.X): 56 data bytes\n--- 8.8.8.8 ping statistics ---\nN transmitted, N received, X% loss"
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping google.com yahoo.com",
+    "exit_code": 1,
+    "output": "PING google.com (X.X.X.X): 56 data bytes\nN bytes from 172.217.168.142: icmp_seq=N ttl=X time=X ms\n--- google.com ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms\nPING yahoo.com (X.X.X.X): 56 data bytes\n--- yahoo.com ping statistics ---\nN transmitted, N received, X% loss"
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping -v google.com yahoo.com",
+    "exit_code": 1,
+    "output": "PING google.com (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 172.217.168.142: icmp_seq=N ttl=X time=X ms\n--- google.com ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms\nPING yahoo.com (X.X.X.X): 56 data bytes, id 0xXXXX = N\n--- yahoo.com ping statistics ---\nN transmitted, N received, X% loss"
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping google.com -v yahoo.com facebook.com",
+    "exit_code": 1,
+    "output": "PING google.com (X.X.X.X): 56 data bytes, id 0xXXXX = N\nN bytes from 172.217.168.142: icmp_seq=N ttl=X time=X ms\n--- google.com ping statistics ---\nN transmitted, N received, X% loss\nround-trip min/avg/max/stddev = X/X/X/X ms\nPING yahoo.com (X.X.X.X): 56 data bytes, id 0xXXXX = N\n--- yahoo.com ping statistics ---\nN transmitted, N received, X% loss\nPING facebook.com (X.X.X.X): 56 data bytes, id 0xXXXX = N\n--- facebook.com ping statistics ---\nN transmitted, N received, X% loss"
+  }
+]
