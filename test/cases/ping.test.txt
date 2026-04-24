@@ -1,4 +1,4 @@
-#✅ Basic IPv4
+# ✅ Basic IPv4
 ping 127.0.0.1
 ping localhost
 ping '127.0.0.1'
@@ -8,18 +8,14 @@ ping LoCaLhOsT
 ping LoCALhoST
 ping 8.8.8.8
 ping 1.1.1.1
-ping 1.1.1
-ping 192.168.1
-ping 10.255.255.1
-ping 192.0.2.0
-#🌐 Domain Names / FQDN
+# 🌐 Domain Names / FQDN
 ping google.com
 ping "GoOgLe.CoM"
 ping www.google.com
 ping example.com
 ping GOOGLE.com
 ping gOoGlE.CoM
-#🎛️ Verbose Mode (-v)
+# 🎛️ Verbose Mode (-v)
 ping -v 127.0.0.1
 ping -v localhost
 ping 127.0.0.1 -v
@@ -35,19 +31,23 @@ ping -v ftp.debian.org
 ping -v google.com -v
 ping      -v       google.com
 ping	-v	google.com
-#🔀 Multiple Targets
-ping 127.0.0.1 8.8.8.8
-ping google.com yahoo.com
-ping -v google.com yahoo.com
-ping google.com -v yahoo.com facebook.com
-#🖥️ Command Substitution / Shell Expansion
+# 🖥️ Command Substitution / Shell Expansion
 ping "$(echo 127.0.0.1)"
 ping "`echo 127.0.0.1`"
 ping $(echo 127.0.0.1)
 ping "`echo google.com`"
 ping 'google.com'
 ping '127.0.0.1'
-#🧪 Combined / Piped Commands
+# 🧪 Combined / Piped Commands
 ping localhost && echo "Success"
 ping -v 127.0.0.1 | grep ttl
 ping -v 127.0.0.1 | grep time=
+# 🔀 DIFFERENT BEHAVIOUR
+ping 1.1.1
+ping 192.168.1
+ping 10.255.255.1
+ping 192.0.2.0
+ping 127.0.0.1 8.8.8.8
+ping google.com yahoo.com
+ping -v google.com yahoo.com
+ping google.com -v yahoo.com facebook.com

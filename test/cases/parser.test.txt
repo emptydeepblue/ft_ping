@@ -50,7 +50,6 @@ ping .....
 ping
 ping ""
 ping "" ""
-ping ""
 # 🔀 DIFFERENT BEHAVIOUR
 ping -vlocalhost
 ping --help

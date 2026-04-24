@@ -1,0 +1,164 @@
+[
+  {
+    "section": "\u274c INVALID IP ADDRESS",
+    "command": "ping 999.999.999.999",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\u274c INVALID IP ADDRESS",
+    "command": "ping 256.256.256.256",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\u274c INVALID IP ADDRESS",
+    "command": "ping 300.300.300.300",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\u26a0\ufe0f INVALID HOSTNAMES",
+    "command": "ping abc..def",
+    "exit_code": 1,
+    "output": "ping: unknown host"
+  },
+  {
+    "section": "\u26a0\ufe0f INVALID HOSTNAMES",
+    "command": "ping google..com",
+    "exit_code": 1,
+    "output": "ping: unknown host"
+  },
+  {
+    "section": "\u26a0\ufe0f INVALID HOSTNAMES",
+    "command": "ping host@name",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\u26a0\ufe0f INVALID HOSTNAMES",
+    "command": "ping google,com",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\u26a0\ufe0f INVALID HOSTNAMES",
+    "command": "ping google:com",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\u26a0\ufe0f INVALID HOSTNAMES",
+    "command": "ping example..com",
+    "exit_code": 1,
+    "output": "ping: unknown host"
+  },
+  {
+    "section": "\ud83c\udf00 WHITESPACE IN HOSTNAME",
+    "command": "ping \" \"",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83c\udf00 WHITESPACE IN HOSTNAME",
+    "command": "ping \"    \"",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83c\udf00 WHITESPACE IN HOSTNAME",
+    "command": "ping \"%20%20%20\"",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83c\udf00 WHITESPACE IN HOSTNAME",
+    "command": "ping -v \"127.0.0.1   \"",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83c\udf00 WHITESPACE IN HOSTNAME",
+    "command": "ping -v \"    127.0.0.1\"",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83c\udf00 WHITESPACE IN HOSTNAME",
+    "command": "ping \"GOOGLE.COM     \"",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83c\udf00 WHITESPACE IN HOSTNAME",
+    "command": "ping \"google.com \"",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83c\udf00 WHITESPACE IN HOSTNAME",
+    "command": "ping \" google.com\"",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83c\udf00 WHITESPACE IN HOSTNAME",
+    "command": "ping \" google.com   \"",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83c\udf10 FQDN",
+    "command": "ping sub.domain.google.com",
+    "exit_code": 1,
+    "output": "ping: unknown host"
+  },
+  {
+    "section": "\ud83c\udf10 FQDN",
+    "command": "ping \"google.com    extra\"",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83d\udee1\ufe0f COMMAND INJECTION",
+    "command": "ping \"$(ls)\"",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83d\udee1\ufe0f COMMAND INJECTION",
+    "command": "ping \"; rm -rf /\"",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83d\udee1\ufe0f COMMAND INJECTION",
+    "command": "ping \"127.0.0.1; echo hello\"",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping -- -v",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping -- -v 127.0.0.1",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping -- -- -? 127.0.0.1",
+    "exit_code": -2,
+    "output": ""
+  },
+  {
+    "section": "\ud83d\udd00 DIFFERENT BEHAVIOUR",
+    "command": "ping -- -4./ft_pong -- -v",
+    "exit_code": -2,
+    "output": ""
+  }
+]

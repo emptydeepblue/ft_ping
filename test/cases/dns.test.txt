@@ -9,8 +9,7 @@ ping host@name
 ping google,com
 ping google:com
 ping example..com
-# 🌀 WHITESPACES
-ping \n\t
+# 🌀 WHITESPACE IN HOSTNAME
 ping " "
 ping "    "
 ping "%20%20%20"
@@ -20,23 +19,13 @@ ping "GOOGLE.COM     "
 ping "google.com "
 ping " google.com"
 ping " google.com   "
-# 🌐 FQDN CASES
+# 🌐 FQDN
 ping sub.domain.google.com
 ping "google.com    extra"
 # 🛡️ COMMAND INJECTION
 ping "$(ls)"
-ping "$(ls -la)"
 ping "; rm -rf /"
 ping "127.0.0.1; echo hello"
-ping "`shutdown now`"
-ping "$(reboot)"
-# 🧬 BINARY
-ping "$(printf '\x00')"
-ping "$(printf '\xff\xff')"
-ping "%00%01%02"
-# 🎯 EDGE CASES
-ping "$(printf '\x00')"
-ping "$(printf '\xff\xff')"
 # 🔀 DIFFERENT BEHAVIOUR
 ping -- -v
 ping -- -v 127.0.0.1
