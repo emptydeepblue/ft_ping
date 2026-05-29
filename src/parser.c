@@ -6,13 +6,15 @@
 /*   By: everonel <everonel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 13:29:33 by everonel          #+#    #+#             */
-/*   Updated: 2026/04/24 14:25:04 by everonel         ###   ########.fr       */
+/*   Updated: 2026/05/29 10:36:50 by everonel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ping.h"
 
 static void parse_options(t_args *, char **, int);
+static void parse_short_options(t_args *, char *);
+static void parse_long_options(t_args *, char *);
 static void validate_hosts(t_args *);
 static void add_host(t_args *, char *);
 
@@ -26,45 +28,51 @@ void parse_args(t_args *args, char **input, int input_size) {
         print_error("missing host operand\n");
         cleanup_and_exit(args, ERROR | HINT, EXIT_USAGE);
     }
-    validate_hosts(args);
+    validate_hosts(args);           // TODO: move in dns.c
 }
 
 static void parse_options(t_args *args, char **input, int input_size) {
     for (int i = 0; i < input_size; i++) {
-        if (input[i][0] == '-' && input[i][1] != '\0') {
-            if (input[i][1] == '?' || input[i][1] == 'h') {
-                cleanup_and_exit(args, HELP, EXIT_SUCCESS);
-            } else if (input[i][1] == 'v') {
-                args->opt_verbose = 1;
-                for (int j = 2; input[i][j] != '\0'; j++)
-                    if (input[i][j] == '?' || input[i][j] == 'h')
-                        cleanup_and_exit(args, HELP, EXIT_SUCCESS);
-                    else if (input[i][j] != 'v') {
-                        print_error("invalid option -- '%c'", input[i][j]);
-                        cleanup_and_exit(args, ERROR | HINT, EXIT_USAGE);
-                    }
-            } else if (input[i][1] == '-') {
-                if (input[i][2] == '\0') {
-                    for (int j = i + 1; j < input_size; j++)
-                        add_host(args, input[j]);
-                    return;
-                }
-                if (strcmp(input[i] + 2, "help") == 0 || strcmp(input[i] + 2, "usage") == 0)
-                    cleanup_and_exit(args, HELP, EXIT_SUCCESS);
-                if (input[i][2] == 'v') {
-                    print_error("option '%s' is ambiguous; possibilities: '-v' '-?'", input[i]);
-                    cleanup_and_exit(args, ERROR, EXIT_USAGE);
-                }
-                print_error("unrecognized option '%s'", input[i]);
-                cleanup_and_exit(args, ERROR | HINT, EXIT_USAGE);
-            } else {
-                print_error("invalid option -- '%c'", input[i][1]);
-                cleanup_and_exit(args, ERROR | HINT, EXIT_USAGE);
+        char *arg = input[i];
+        if (arg[0] != '-' || arg[1] == '\0') {
+            add_host(args, arg);
+        } else if (arg[1] != '-') {
+            parse_short_options(args, arg);
+        } else if (arg[2] == '\0') {
+            while (++i < input_size) {
+                add_host(args, input[i]);
             }
+            return;
         } else {
-            add_host(args, input[i]);
+            parse_long_options(args, arg);
         }
     }
+}
+
+static void parse_short_options(t_args *args, char *arg) {
+    for (int j = 1; arg[j] != '\0'; j++) {
+        if (arg[j] == 'v'){
+            args->opt_verbose = 1;
+        } else if (arg[j] == '?') {
+            cleanup_and_exit(args, HELP, EXIT_SUCCESS);
+        } else {
+            print_error("invalid option -- '%c'", arg[j]);
+            cleanup_and_exit(args, ERROR | HINT, EXIT_USAGE);
+        }
+    }
+}
+
+static void parse_long_options(t_args *args, char *arg) {
+    char *option = arg + 2;
+    if (strcmp(option, "help") == 0 || strcmp(option, "usage") == 0) {
+        cleanup_and_exit(args, HELP, EXIT_SUCCESS);
+    } 
+    if (option[0] == 'v' /*&& option[1] == '\0'*/) {
+        print_error("option '%s' is ambiguous; possibilities: '-v' '-?'", arg);
+        cleanup_and_exit(args, ERROR, EXIT_USAGE);
+    }
+    print_error("unrecognized option '%s'", arg);
+    cleanup_and_exit(args, ERROR | HINT, EXIT_USAGE);
 }
 
 static void validate_hosts(t_args *args) {
