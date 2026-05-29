@@ -73,6 +73,8 @@ def normalize(text: str) -> str:
     t = re.sub(r"[\d.]+/[\d.]+/[\d.]+/[\d.]+ ms", "X/X/X/X ms", t)    # RTT stats
     t = re.sub(r", time \d+ms", "", t)                                  # Linux-only "time 2002ms"
     t = re.sub(r"\(\d+\) bytes of data", "N bytes of data", t)          # "(84) bytes of data"
+    t = re.sub(r", id 0x[0-9a-f]+,", ", id 0xXXXX,", t)               # ICMP id in verbose dump
+    t = re.sub(r", seq 0x[0-9a-f]+", ", seq 0xXXXX", t)               # ICMP seq in verbose dump
     return t.strip()
 
 
