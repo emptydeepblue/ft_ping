@@ -6,7 +6,7 @@
 /*   By: everonel <everonel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 13:29:33 by everonel          #+#    #+#             */
-/*   Updated: 2026/05/29 10:36:50 by everonel         ###   ########.fr       */
+/*   Updated: 2026/05/29 10:52:44 by everonel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,11 @@ static void validate_hosts(t_args *args) {
 }
 
 static void add_host(t_args *args, char *host_name) {
-    t_host *new_host = xcalloc(args, sizeof(t_host));
+    t_host *new_host = calloc(1, sizeof(t_host));
+    if (!new_host) {
+        print_error("memory allocation failed\n");
+        cleanup_and_exit(args, ERROR, EXIT_FAILURE);
+    }
     new_host->name = strdup(host_name);
     new_host->next = NULL;
 

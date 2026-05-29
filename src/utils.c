@@ -6,21 +6,11 @@
 /*   By: everonel <everonel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 13:28:54 by everonel          #+#    #+#             */
-/*   Updated: 2025/10/23 17:59:08 by everonel         ###   ########.fr       */
+/*   Updated: 2026/05/29 10:53:02 by everonel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ping.h"
-
-
-void *xcalloc(t_args *args, size_t size) {
-    void *ptr = calloc(1, size);
-    if (!ptr) {
-        print_error("memory allocation failed\n");
-        cleanup_and_exit(args, ERROR, EXIT_FAILURE);
-    }
-    return ptr;
-}
 
 void free_hosts(t_args *args) {
     if (!args) return;

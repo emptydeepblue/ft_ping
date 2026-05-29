@@ -87,7 +87,6 @@ void        validate_host_dns(t_args *, t_host *);
 void        ping(t_args *, t_host *);
 
 /*utils*/
-void        *xcalloc(t_args *, size_t);
 void        free_hosts(t_args *);
 int         has_non_ascii(const char *);
 void        cleanup_and_exit(t_args *, ExitFlags, int);
