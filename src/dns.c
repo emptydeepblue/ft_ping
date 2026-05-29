@@ -6,13 +6,17 @@
 /*   By: everonel <everonel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 10:27:51 by everonel          #+#    #+#             */
-/*   Updated: 2025/10/23 17:42:54 by everonel         ###   ########.fr       */
+/*   Updated: 2026/05/29 10:57:28 by everonel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ping.h"
-
+    
 void validate_host_dns(t_args *args, t_host *host) {
+    if (has_non_ascii(host->name) || host->name[0] == '.' || host->name[0] == '\0') {
+        print_error("unknown host\n");
+        cleanup_and_exit(args, ERROR, EXIT_FAILURE);
+    }
     struct addrinfo hints, *result;
 
     memset(&hints, 0, sizeof(hints));
