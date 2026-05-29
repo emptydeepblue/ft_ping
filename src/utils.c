@@ -6,11 +6,31 @@
 /*   By: everonel <everonel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 13:28:54 by everonel          #+#    #+#             */
-/*   Updated: 2026/05/29 10:53:02 by everonel         ###   ########.fr       */
+/*   Updated: 2026/05/29 12:08:00 by everonel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ping.h"
+
+void add_host(t_args *args, char *host_name) {
+    t_host *new_host = calloc(1, sizeof(t_host));
+    
+    if (!new_host) {
+        print_error("memory allocation failed\n");
+        cleanup_and_exit(args, ERROR, EXIT_FAILURE);
+    }
+    new_host->name = strdup(host_name);
+    new_host->next = NULL;
+
+    if (args->hosts == NULL)
+        args->hosts = new_host;
+    else {
+        t_host *current = args->hosts;
+        while (current->next != NULL)
+            current = current->next;
+        current->next = new_host;
+    }
+}
 
 void free_hosts(t_args *args) {
     if (!args) return;
@@ -34,19 +54,14 @@ int has_non_ascii(const char *str) {
 }
 
 void cleanup_and_exit(t_args *args, ExitFlags flags, int exit_code) {
-    if (flags & HELP) {
+    if (flags & HELP) 
         print_help();
-    }
-    if (flags & HINT) {
+    
+    if (flags & HINT) 
         print_hint();
-    }
+    
     free_hosts(args);
     exit(exit_code);
-}
-
-void signal_handler(int sig) {
-    (void)sig;
-    g_keep_running = 0;
 }
 
 uint16_t calculate_checksum(void *data, int len) {
@@ -58,26 +73,16 @@ uint16_t calculate_checksum(void *data, int len) {
         len -= 2;
     }
 
-    if (len == 1) {
+    if (len == 1) 
         sum += *(uint8_t *)buf;
-    }
-
-    while (sum >> 16) {
+    
+    while (sum >> 16)
         sum = (sum & 0xFFFF) + (sum >> 16);
-    }
-
+    
     return ~sum;
 }
 
-t_ping_stats initialize_stats(char *hostname) {
-    t_ping_stats stats;
-
-    stats.hostname = strdup(hostname);
-    stats.packets_sent = 0;
-    stats.packets_recv = 0;
-    stats.min_time = DBL_MAX;
-    stats.max_time = 0.0;
-    stats.total_time = 0.0;
-    stats.sum_squares = 0.0;
-    return stats;
+void signal_handler(int sig) {
+    (void)sig;
+    g_keep_running = 0;
 }

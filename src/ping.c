@@ -6,16 +6,11 @@
 /*   By: everonel <everonel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 16:10:01 by everonel          #+#    #+#             */
-/*   Updated: 2025/10/23 17:53:11 by everonel         ###   ########.fr       */
+/*   Updated: 2026/05/29 11:19:26 by everonel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ping.h"
-
-static int initialize_socket(t_args *args);
-static t_icmp_packet initialize_packet(pid_t, int);
-static t_icmp_packet *parse_icmp_reply(char *recv, ssize_t recv_bytes);
-static int check_packet_ownership(t_icmp_packet *reply, pid_t pid, int exp_seq);
 
 void ping(t_args *args, t_host *host) {
     pid_t        pid = getpid(), sequence = 0;
@@ -47,10 +42,10 @@ void ping(t_args *args, t_host *host) {
             ssize_t received = recvfrom(sockfd, recv_buffer, sizeof(recv_buffer), 0, (struct sockaddr *)&recv_addr, &addr_len);
             if (received < 0)
                 break;
-            t_icmp_packet *reply = parse_icmp_reply(recv_buffer, received);
+            t_icmp_packet *reply = parse_reply(recv_buffer, received);
 
             if (reply != NULL) {
-                if (check_packet_ownership(reply, pid, sequence)) {
+                if (validate_ownership(reply, pid, sequence)) {
                     gettimeofday(&recv_time, NULL);
                     double rtt = (recv_time.tv_sec - send_time.tv_sec) * 1000.0 +
                                 (recv_time.tv_usec - send_time.tv_usec) / 1000.0;
@@ -82,62 +77,3 @@ void ping(t_args *args, t_host *host) {
     close(sockfd);
 }
 
-static int initialize_socket(t_args *args) {
-    int sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
-    if (sockfd < 0) {
-        if (errno == EPERM) {
-            print_error("socket: Operation not permitted (need root)\n");
-            cleanup_and_exit(args, ERROR, EXIT_FAILURE);
-        } else {
-            print_error("socket");
-            cleanup_and_exit(args, ERROR, EXIT_FAILURE);
-        }
-    }
-    struct timeval timeout = {1, 0};
-    setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
-    return sockfd;
-}
-
-static t_icmp_packet initialize_packet(pid_t pid, int sequence) {
-    t_icmp_packet packet;
-    memset(&packet, 0, sizeof(t_icmp_packet));
-    packet.type = ICMP_ECHO_REQUEST;
-    packet.code = 0;
-    packet.checksum = 0;
-    packet.identifier = htons(pid & 0xFFFF);
-    packet.sequence = htons(sequence);
-    // Fill data with something recognizable
-    sprintf(packet.payload, "Hello from ping #%d", sequence);
-    packet.checksum = calculate_checksum(&packet, sizeof(t_icmp_packet));
-    return packet;
-}
-
-static t_icmp_packet *parse_icmp_reply(char *recv, ssize_t recv_bytes) {
-    if (recv_bytes < ICMP_HEADER_SIZE)
-        return NULL;
-
-    struct iphdr    *ip_header = (struct iphdr *)recv;
-    int             header_bytes = ip_header->ihl * 4;
-    t_icmp_packet   *icmp_packet = NULL;
-
-    if (recv_bytes < header_bytes + ICMP_HEADER_SIZE)
-        return NULL;
-
-    icmp_packet = (t_icmp_packet *)(recv + header_bytes);
-    return icmp_packet;
-}
-
-static int check_packet_ownership(t_icmp_packet *reply, pid_t pid, int exp_seq) {
-    if (reply->type != ICMP_ECHO_REPLY)
-        return 0;
-
-    uint16_t reply_id = ntohs(reply->identifier);
-    if (reply_id != (pid & 0xFFFF))
-        return 0;
-
-    uint16_t reply_seq = ntohs(reply->sequence);
-    if (reply_seq != exp_seq)
-        return 0;
-
-    return 1;
-}

@@ -77,30 +77,37 @@ typedef struct s_ping_stats {
    through the call graph. */
 extern volatile sig_atomic_t g_keep_running;
 
-/*parser*/
-void        parse_args(t_args *, char **, int);
+/*parser.c*/
+void            parse_args(t_args *, char **, int);
+t_icmp_packet   *parse_reply(char *, ssize_t);
 
-/*DNS*/
-void        validate_host_dns(t_args *, t_host *);
+/*validator.c*/
+void            validate_host(t_args *, t_host *);
+int             validate_ownership(t_icmp_packet *, pid_t, int);
 
-/*ping*/
-void        ping(t_args *, t_host *);
+/*initializer.c*/
+int             initialize_socket(t_args *);
+t_ping_stats    initialize_stats(char *);
+t_icmp_packet   initialize_packet(pid_t, int);
 
-/*utils*/
-void        free_hosts(t_args *);
-int         has_non_ascii(const char *);
-void        cleanup_and_exit(t_args *, ExitFlags, int);
-void        signal_handler(int);
-uint16_t    calculate_checksum(void *, int);
-t_ping_stats initialize_stats(char *);
+/*ping.c*/
+void            ping(t_args *, t_host *);
 
-/*print*/
-void        print_error(const char *, ...);
-void        print_hint(void);
-void        print_help(void);
-void        print_header(t_args *, t_host *, pid_t);
-void        print_ping(t_icmp_packet *, char *, ssize_t, struct sockaddr_in, double);
-void        print_icmp_error(t_args *, t_icmp_packet *, struct sockaddr_in *, int, pid_t);
-void        print_stats(t_ping_stats *);
+/*print.c*/
+void            print_error(const char *, ...);
+void            print_hint(void);
+void            print_help(void);
+void            print_header(t_args *, t_host *, pid_t);
+void            print_ping(t_icmp_packet *, char *, ssize_t, struct sockaddr_in, double);
+void            print_icmp_error(t_args *, t_icmp_packet *, struct sockaddr_in *, int, pid_t);
+void            print_stats(t_ping_stats *);
+
+/*utils.c*/
+void            add_host(t_args *, char *);
+void            free_hosts(t_args *);
+int             has_non_ascii(const char *);
+void            cleanup_and_exit(t_args *, ExitFlags, int);
+uint16_t        calculate_checksum(void *, int);
+void            signal_handler(int);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: everonel <everonel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 13:29:13 by everonel          #+#    #+#             */
-/*   Updated: 2025/10/23 17:39:05 by everonel         ###   ########.fr       */
+/*   Updated: 2026/05/29 11:44:12 by everonel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void print_error(const char *format, ...) {
     va_start(args, format);
     vfprintf(stderr, format, args);
     va_end(args);
-    if (format[strlen(format) - 1] != '\n') {
+
+    if (format[strlen(format) - 1] != '\n')
         fprintf(stderr, "\n");
-    }
 }
 
 void print_hint() {
@@ -128,7 +128,6 @@ void print_icmp_error(t_args *args, t_icmp_packet *icmp,
             orig_icmp->type, orig_icmp->code, embedded_size, orig_id, orig_seq);
     }
 }
-
 
 void print_stats(t_ping_stats *stats) {
     printf("--- %s ping statistics ---\n", stats->hostname);
