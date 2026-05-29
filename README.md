@@ -1,39 +1,36 @@
 # ft_ping
 
-A custom implementation of the `ping` utility in C, implementing ICMP protocols, DNS resolution, and network programming concepts.
+A from-scratch implementation of the `ping` utility in C — raw ICMP echo requests, DNS resolution, RTT statistics, and signal-driven graceful exit.
+
+**Specialization:** Sys Admin
+**XP:** 4,200 · **People:** 1 · **Status:** 🟦 Completed
+
+---
 
 ## 🚀 Features
 
-- Send ICMP echo requests to hosts (IPv4)
-- DNS resolution for hostnames and IP addresses  
-- Statistics reporting (packet loss, min/avg/max/stddev timing)
-- Verbose mode with `-v` flag
-- Multiple host support
-- Signal handling with `Ctrl+C`
-- Comprehensive test suite
+- Send IPv4 ICMP echo requests, parse replies, compute RTT
+- DNS resolution for hostnames and dotted-quad addresses
+- Statistics: packets sent / received, packet loss, min / avg / max / stddev
+- Verbose mode (`-v`)
+- Multiple-host argument support
+- Graceful `Ctrl+C` handling: print summary and exit
+- Reference-based test suite
 
 ## 🛠️ Build & Run
 
-**Prerequisites**: GCC, Make, Linux/Unix, Root privileges
+**Prerequisites:** GCC, GNU Make, Linux/Unix, root (raw sockets)
 
 ```bash
-# Build
-make
+make                          # Build ./ft_ping
 
-# Basic usage
-sudo ./ft_ping google.com
-
-# Verbose mode  
-sudo ./ft_ping -v localhost
-
-# Multiple hosts
-sudo ./ft_ping google.com 8.8.8.8
-
-# Help
-sudo ./ft_ping -?
+sudo ./ft_ping google.com     # Basic
+sudo ./ft_ping -v localhost   # Verbose
+sudo ./ft_ping 8.8.8.8 1.1.1.1  # Multiple targets
+sudo ./ft_ping -?             # Help
 ```
 
-**Sample Output:**
+**Sample output:**
 ```
 PING google.com (142.250.180.142): 56 data bytes
 64 bytes from 142.250.180.142: icmp_seq=0 ttl=114 time=20.825 ms
@@ -45,48 +42,61 @@ round-trip min/avg/max/stddev = 20.825/20.825/20.825/0.000 ms
 ## 🧪 Testing
 
 ```bash
-# Run test suites
-make test-parser    # Argument parsing
-make test-dns       # DNS resolution
-
-# Valgrind memory checking
+sudo python3 test/tester.py              # Diff-vs-reference test runner
 sudo valgrind --leak-check=full ./ft_ping google.com
 ```
 
-Test results: 🟢 Passed | 🔴 Failed | ⚫ Different Behavior
+Test results: 🟢 Passed | 🔴 Failed | ⚫ Different behavior vs. reference
 
-See [test/README.md](test/README.md) for creating custom test suites.
+See [test/](test/) for case definitions and reference outputs.
 
 ## 📁 Project Structure
 
 ```
 ft_ping/
-├── src/           # Source code (main.c, parser.c, dns.c, ping.c, print.c, utils.c)
-├── inc/           # Headers (ft_ping.h)
-├── test/          # Test suite and documentation  
-├── Makefile       # Build configuration
-└── README.md      # This file
+├── src/
+│   ├── main.c          # Entry, signal setup, main loop
+│   ├── parser.c        # CLI argument parsing
+│   ├── dns.c           # Hostname → IP via getaddrinfo
+│   ├── ping.c          # Raw socket, ICMP send/recv, timing
+│   ├── print.c         # Output formatting and final stats
+│   └── utils.c         # Helpers
+├── inc/ft_ping.h
+├── test/
+│   ├── cases/          # Test inputs
+│   ├── ref/            # Reference outputs
+│   └── tester.py       # Test driver
+└── Makefile
 ```
 
 ## 🔧 Implementation
 
-**Core Components:**
-- **Parser**: Command-line argument validation and option handling
-- **DNS**: Hostname to IP resolution using `getaddrinfo()`  
-- **ICMP**: Raw socket creation, packet crafting, and RTT measurement
-- **Output**: Statistics calculation and formatted display
+**Core components:**
+- **Parser** — CLI flags and target list, input validation
+- **DNS** — `getaddrinfo()` for hostname → IPv4 resolution
+- **ICMP** — raw socket, echo-request crafting, RTT measurement
+- **Output** — live per-reply lines, summary statistics on exit
 
-**Technical Details:**
-- Uses raw sockets (requires root privileges)
-- Implements RFC 792 ICMP Echo Request/Reply
-- Signal handling for graceful interruption
-- Precise timing with `gettimeofday()`
+**Technical details:**
+- Raw sockets (`SOCK_RAW`, `IPPROTO_ICMP`) — requires root or `CAP_NET_RAW`
+- ICMP Echo Request / Reply per [RFC 792](https://tools.ietf.org/html/rfc792)
+- Timing via `gettimeofday()`; stddev computed over the RTT sample
+- `SIGINT` handler triggers summary print and clean exit
 
-##  Learning Objectives
+## 📚 Learning Objectives
 
 - Low-level network programming with raw sockets
-- ICMP protocol implementation (RFC 792)
-- DNS resolution and IPv4 address handling
-- Signal handling and process management
-- Automated testing and validation
-- Memory management and debugging
+- ICMP and the IPv4 header layout
+- DNS resolution via `getaddrinfo`
+- Signal handling and graceful shutdown
+- Building a reference-diff test harness
+
+## 🔗 References
+
+- [RFC 792 — Internet Control Message Protocol](https://tools.ietf.org/html/rfc792)
+- `man 7 raw`, `man 7 icmp`, `man 3 getaddrinfo`
+- [iputils ping source](https://github.com/iputils/iputils) — reference implementation
+
+---
+
+*42 School — RNCP7 · Sys Admin*
