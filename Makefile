@@ -3,7 +3,7 @@ CC=gcc
 CFLAGS=-Wall -Wextra -Werror -Iinc
 LDFLAGS=-lm
 OBJDIR=obj
-SOURCES=src/main.c src/parser.c src/validator.c src/initializer.c src/ping.c src/print.c src/utils.c
+SOURCES=src/main.c src/parser.c src/validator.c src/initializer.c src/ping.c src/print.c src/icmp_error.c src/error.c src/utils.c
 OBJECTS=$(SOURCES:src/%.c=$(OBJDIR)/%.o)
 
 .PHONY: all clean fclean re

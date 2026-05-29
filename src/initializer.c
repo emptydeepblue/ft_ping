@@ -6,7 +6,7 @@
 /*   By: everonel <everonel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 11:11:17 by everonel          #+#    #+#             */
-/*   Updated: 2026/05/29 11:30:31 by everonel         ###   ########.fr       */
+/*   Updated: 2026/05/29 12:35:50 by everonel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int initialize_socket(t_args *args) {
     if (sockfd < 0) {
         if (errno == EPERM) {
             print_error("socket: Operation not permitted (need root)\n");
-            cleanup_and_exit(args, ERROR, EXIT_FAILURE);
+            print_exit(args, ERROR, EXIT_FAILURE);
         } else {
             print_error("socket");
-            cleanup_and_exit(args, ERROR, EXIT_FAILURE);
+            print_exit(args, ERROR, EXIT_FAILURE);
         }
     }
     struct timeval timeout = {1, 0};

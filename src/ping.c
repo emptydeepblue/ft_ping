@@ -12,6 +12,18 @@
 
 #include "../inc/ft_ping.h"
 
+t_icmp_packet *parse_reply(char *recv, ssize_t recv_bytes) {
+    if (recv_bytes < ICMP_HEADER_SIZE)
+        return NULL;
+
+    struct iphdr *ip_header = (struct iphdr *)recv;
+    int           header_bytes = ip_header->ihl * 4;
+
+    if (recv_bytes < header_bytes + ICMP_HEADER_SIZE)
+        return NULL;
+    return (t_icmp_packet *)(recv + header_bytes);
+}
+
 void ping(t_args *args, t_host *host) {
     pid_t        pid = getpid(), sequence = 0;
     int          sockfd = initialize_socket(args);

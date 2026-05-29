@@ -6,7 +6,7 @@
 /*   By: everonel <everonel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 13:28:54 by everonel          #+#    #+#             */
-/*   Updated: 2026/05/29 12:08:00 by everonel         ###   ########.fr       */
+/*   Updated: 2026/05/29 12:35:50 by everonel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void add_host(t_args *args, char *host_name) {
     
     if (!new_host) {
         print_error("memory allocation failed\n");
-        cleanup_and_exit(args, ERROR, EXIT_FAILURE);
+        print_exit(args, ERROR, EXIT_FAILURE);
     }
     new_host->name = strdup(host_name);
     new_host->next = NULL;
@@ -51,17 +51,6 @@ int has_non_ascii(const char *str) {
         if ((unsigned char)str[i] > 127)
             return 1;
     return 0;
-}
-
-void cleanup_and_exit(t_args *args, ExitFlags flags, int exit_code) {
-    if (flags & HELP) 
-        print_help();
-    
-    if (flags & HINT) 
-        print_hint();
-    
-    free_hosts(args);
-    exit(exit_code);
 }
 
 uint16_t calculate_checksum(void *data, int len) {

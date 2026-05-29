@@ -79,6 +79,9 @@ extern volatile sig_atomic_t g_keep_running;
 
 /*parser.c*/
 void            parse_args(t_args *, char **, int);
+
+/*ping.c*/
+void            ping(t_args *, t_host *);
 t_icmp_packet   *parse_reply(char *, ssize_t);
 
 /*validator.c*/
@@ -90,23 +93,22 @@ int             initialize_socket(t_args *);
 t_ping_stats    initialize_stats(char *);
 t_icmp_packet   initialize_packet(pid_t, int);
 
-/*ping.c*/
-void            ping(t_args *, t_host *);
-
 /*print.c*/
-void            print_error(const char *, ...);
-void            print_hint(void);
-void            print_help(void);
 void            print_header(t_args *, t_host *, pid_t);
 void            print_ping(t_icmp_packet *, char *, ssize_t, struct sockaddr_in, double);
-void            print_icmp_error(t_args *, t_icmp_packet *, struct sockaddr_in *, int, pid_t);
 void            print_stats(t_ping_stats *);
+
+/*icmp_error.c*/
+void            print_icmp_error(t_args *, t_icmp_packet *, struct sockaddr_in *, int, pid_t);
+
+/*error.c*/
+void            print_error(const char *, ...);
+void            print_exit(t_args *, ExitFlags, int);
 
 /*utils.c*/
 void            add_host(t_args *, char *);
 void            free_hosts(t_args *);
 int             has_non_ascii(const char *);
-void            cleanup_and_exit(t_args *, ExitFlags, int);
 uint16_t        calculate_checksum(void *, int);
 void            signal_handler(int);
 

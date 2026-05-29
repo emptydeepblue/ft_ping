@@ -6,7 +6,7 @@
 /*   By: everonel <everonel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 13:28:32 by everonel          #+#    #+#             */
-/*   Updated: 2026/05/29 11:22:08 by everonel         ###   ########.fr       */
+/*   Updated: 2026/05/29 15:04:49 by everonel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ int main(int ac, char **av) {
     t_args args = {0};
     args.opt_verbose = 0;
     args.hosts = NULL;
-    
+    setlinebuf(stdout);
+
     parse_args(&args, av + 1, ac - 1);
     
     if (args.hosts == NULL) {
         print_error("missing host operand\n");
-        cleanup_and_exit(&args, ERROR | HINT, EXIT_USAGE);
+        print_exit(&args, ERROR | HINT, EXIT_USAGE);
     }
     
     for (t_host *host = args.hosts; host != NULL; host = host->next) {

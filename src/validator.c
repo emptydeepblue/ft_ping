@@ -6,7 +6,7 @@
 /*   By: everonel <everonel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 10:27:51 by everonel          #+#    #+#             */
-/*   Updated: 2026/05/29 12:07:46 by everonel         ###   ########.fr       */
+/*   Updated: 2026/05/29 12:35:50 by everonel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void validate_host(t_args *args, t_host *host) {
     if (has_non_ascii(host->name) || host->name[0] == '.' || host->name[0] == '\0') {
         print_error("unknown host\n");
-        cleanup_and_exit(args, ERROR, EXIT_FAILURE);
+        print_exit(args, ERROR, EXIT_FAILURE);
     }
     struct addrinfo hints, *result;
 
@@ -27,7 +27,7 @@ void validate_host(t_args *args, t_host *host) {
     int status = getaddrinfo(host->name, NULL, &hints, &result);
     if (status != 0){
         print_error("unknown host\n");
-        cleanup_and_exit(args, ERROR, EXIT_FAILURE);
+        print_exit(args, ERROR, EXIT_FAILURE);
     }
 
     memcpy(&host->addr, result->ai_addr, sizeof(host->addr));

@@ -66,6 +66,7 @@ def normalize(text: str) -> str:
     t = re.sub(r"\bttl=\d+\b", "ttl=X", t)                             # TTL hops
     t = re.sub(r"\bicmp_seq=\d+\b", "icmp_seq=N", t)                    # sequence numbers
     t = re.sub(r"\d+ bytes from", "N bytes from", t)                    # per-packet byte count
+    t = re.sub(r"from \d+\.\d+\.\d+\.\d+", "from X.X.X.X", t)          # resolved peer IP in reply line
     t = re.sub(r"\d+ packets transmitted", "N transmitted", t)
     t = re.sub(r"\d+ (?:packets )?received", "N received", t)
     t = re.sub(r"[\d.]+% packet loss", "X% loss", t)
@@ -172,9 +173,18 @@ def run_suite(suite: str, regen: bool) -> bool:
 
         out, code = run(ft_cmd(cmd))
         got = key_output(out)
+        # Re-normalize the cached reference so normalize() improvements (e.g. IP
+        # scrubbing) also cover references captured before those rules existed.
+        ref_out = normalize(ref["output"])
 
-        exit_ok   = ref["exit_code"] == code
-        output_ok = ref["output"] == got
+        exit_ok = ref["exit_code"] == code
+        # Hostnames are case-insensitive (DNS), and resolvers canonicalize case
+        # differently per environment — compare case-insensitively except for the
+        # parser suite, where option-character case is significant.
+        if suite == "parser":
+            output_ok = ref_out == got
+        else:
+            output_ok = ref_out.lower() == got.lower()
         ok = exit_ok and output_ok
 
         if ok:
@@ -186,16 +196,16 @@ def run_suite(suite: str, regen: bool) -> bool:
         else:
             print(f"  {RED}✗{RESET} {cmd}")
             failed += 1
-            failures.append((cmd, ref, code, got, exit_ok, output_ok))
+            failures.append((cmd, ref, ref_out, code, got, exit_ok, output_ok))
 
     if failures:
         print(f"\n{BOLD}─── Failures ───{RESET}")
-        for cmd, ref, got_code, got_out, exit_ok, output_ok in failures:
+        for cmd, ref, ref_out, got_code, got_out, exit_ok, output_ok in failures:
             print(f"\n  {RED}{cmd}{RESET}")
             if not exit_ok:
                 print(f"    exit  expected={ref['exit_code']}  got={got_code}")
             if not output_ok:
-                for line in ref["output"].splitlines():
+                for line in ref_out.splitlines():
                     print(f"    {GREEN}+ {line}{RESET}")
                 for line in got_out.splitlines():
                     print(f"    {RED}- {line}{RESET}")
