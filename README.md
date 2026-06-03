@@ -3,7 +3,7 @@
 A from-scratch implementation of the `ping` utility in C — raw ICMP echo requests, DNS resolution, RTT statistics, and signal-driven graceful exit.
 
 **Specialization:** Sys Admin
-**XP:** 4,200 · **People:** 1 · **Status:** 🟦 Completed
+**XP:** 4,200 · **People:** 1 · **Status:** ✅ Validated
 
 ---
 
