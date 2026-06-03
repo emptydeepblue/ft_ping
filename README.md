@@ -7,6 +7,16 @@ A from-scratch implementation of the `ping` utility in C — raw ICMP echo reque
 
 ---
 
+> **⚠️ Known behavior / limitation**
+> When a target triggers an ICMP error reply (e.g. *Time to live exceeded* or
+> *Destination unreachable*), `ft_ping` **without** `-v` prints only the initial
+> `PING ...` header line and the final statistics — it does **not** print a line
+> per error reply. The reference inetutils `ping` does print those error replies
+> inline. Run `ft_ping` with `-v` to see the full ICMP error dump for each such
+> reply.
+
+---
+
 ## 🚀 Features
 
 - Send IPv4 ICMP echo requests, parse replies, compute RTT

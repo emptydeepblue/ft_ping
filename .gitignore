@@ -1,9 +1,15 @@
-# Exclude proprietary 42 School materials from public distribution
-# en.subject.pdf
+# Exclude proprietary 42 School materials & personal notes from public distribution
+docs/*.pdf
+docs/notes.md
+docs/cheatsheet.md
 
 # Ignore the compiled binary and object files
 ft_ping
 obj/
+
+# Python cache
+__pycache__/
+*.pyc
 
 # Ignore testing-generated files
 ref/
